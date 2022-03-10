@@ -1,11 +1,9 @@
 var displayValue;
+var numArray=[];
 var num1;
 var num2;
 var callback;
-var temp;
-// input(num1);
 var display=document.getElementById('calculation');
-// display.textContent=num1;
 var opDisplay=document.getElementById('operations');
 
 //enter/click a number --> num1
@@ -14,14 +12,10 @@ var opDisplay=document.getElementById('operations');
 //result is displayValue
 //if additional operation performed, displayValue is stored as num1
     
-
-
-
-
 function operate(num1,callback,num2){
     displayValue=callback(num1,num2);
     display.textContent=displayValue;
-    num1=displayValue;
+    numArray[0]=displayValue;
 }
 
 function add(x,y){
@@ -42,54 +36,84 @@ function divide(num1,num2){
 
 const numButtons=document.querySelectorAll('.number');
 numButtons.forEach((numButton) => {
-    numButton.addEventListener('click', function (e) {
-        // console.log(button.textContent);
-        // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
-        if(num1===undefined){
-            num1=Number(numButton.textContent);
-            display.textContent=num1;
-        }
-        else{
-            num2=Number(numButton.textContent);
-            display.textContent=num2;
-        }
-        console.log(num1);
-        console.log(num2);
-        console.log(displayValue);
-        //num1 = 1, num2=2, temp=3, display=3, num1=3, num2=3, display=6
+    numButton.addEventListener('click', numInput)
+});
 
-    });
+function numInput(e){
+    if(numArray[0]===undefined){
+        numArray[0]=Number(this.textContent);
+        display.textContent=numArray[0];
+    }
+    else{
+        numArray[1]=Number(this.textContent);
+        display.textContent=numArray[1];
+    }
+    // console.log(`num1: ${numArray[0]}`);
+    // console.log(`num2: ${numArray[1]}`);
+    // console.log(`displayValue: ${displayValue}`);
+    // console.log(`num1: ${num1}`);
+    // console.log(`num2: ${num2}`);
+    // console.log(numArray);
+}
 
-})
+
+
+//         if(typeof num1!=='number'){
+//             num1=Number(numButton.textContent);
+//             display.textContent=num1;
+//         }
+//         else{
+//             num1=displayValue;
+//             num2=Number(numButton.textContent);
+//             display.textContent=num2;
+//         }
+//         console.log(`num1: ${num1}`);
+//         console.log(`num2: ${num2}`);
+//         console.log(typeof num1);
+//     });
+//     console.log(`displayValue: ${displayValue}`);
+//     console.log(`num1: ${num1}`);
+// })
 
 const opButtons=document.querySelectorAll('.operator');
 opButtons.forEach((opButton) => {
-    opButton.addEventListener('click', function (e) {
+    opButton.addEventListener('click', selectOp)
+ });
+ 
+ function selectOp(e) {
         // console.log(button.textContent);
         // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
-        if(opButton.textContent==="+"){
+        if(this.textContent==="+"){
             opDisplay.textContent="+";
             callback=add;
         }
-        else if(opButton.textContent==="-"){
+        else if(this.textContent==="-"){
             opDisplay.textContent="-";
             callback=subtract;
         }
-        else if(opButton.textContent==="×"){
+        else if(this.textContent==="×"){
             opDisplay.textContent="×";
             callback=multiply;
         }
-        else if (opButton.textContent==="÷"){
+        else if (this.textContent==="÷"){
             opDisplay.textContent="÷";
             callback=divide;
-        }      
-    if(opButton.textContent==="ENTER"){
+        }     
+        num1=numArray[0];
+        num2=numArray[1]; 
+        console.log(num1);
+        console.log(num2);
+    if(this.textContent==="ENTER"){
         opDisplay.textContent="=";
-        operate(num1,callback,num2);
+        operate(numArray[0],callback,numArray[1]);
     }
-    });   
-            
-});
+    if(this.textContent==="CLEAR"){
+        opDisplay.textContent='';
+        display.textContent='';
+        numArray=[];
+        callback='';
+    }
+}   
 
 // const enterButton=document.querySelector('#Enter');
 //     enterButton.addEventListener('click', function (e) {
