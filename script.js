@@ -17,7 +17,7 @@ function operate(number1,callback,number2){
     displayValue=callback(number1,number2);
     numArray.push(displayValue);
     display.textContent=displayValue;
-    numArray=numArray.pop();
+    numArray=[numArray.pop()];
     // numArray.pop();
     // numArray.pop();
     // numArray.pop();
@@ -74,6 +74,7 @@ opButtons.forEach((opButton) => {
  function selectOp(e) {
         // console.log(button.textContent);
         // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
+    if(!numArray[0]){
         if(this.textContent==="+"){
             numArray.push(Number(num1string));
             opDisplay.textContent="+";
@@ -87,7 +88,7 @@ opButtons.forEach((opButton) => {
             opDisplay.textContent="-";
             callback=subtract;
             numArray.push(callback);
-            // num2=Number(num2string);
+            // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="×"){
@@ -95,7 +96,7 @@ opButtons.forEach((opButton) => {
             opDisplay.textContent="×";
             callback=multiply;
             numArray.push(callback);
-            // num2=Number(num2string);
+            // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
         else if (this.textContent==="÷"){
@@ -103,9 +104,57 @@ opButtons.forEach((opButton) => {
             numArray.push(Number(num1string));
             callback=divide;
             numArray.push(callback);
-            // num2=Number(num2string);
+            // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }   
+    }
+    else {
+        if(this.textContent==="+"){
+            numArray.push(Number(num2string));
+            opDisplay.textContent="+";
+            callback=add;
+            numArray.push(callback);
+            num2=Number(num2string);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
+            num1string='';
+            num2string='';
+        }
+        else if(this.textContent==="-"){
+            numArray.push(Number(num2string));
+            opDisplay.textContent="-";
+            callback=subtract;
+            numArray.push(callback);
+            num2=Number(num2string);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
+            num1string='';
+            num2string='';
+        }
+        else if(this.textContent==="×"){
+            numArray.push(Number(num2string));
+            opDisplay.textContent="×";
+            callback=multiply;
+            numArray.push(callback);
+            num2=Number(num2string);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
+            num1string='';
+            num2string='';
+        }
+        else if (this.textContent==="÷"){
+            numArray.push(Number(num2string));
+            opDisplay.textContent="÷";
+            callback=divide;
+            numArray.push(callback);
+            num2=Number(num2string);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
+            num1string='';
+            num2string='';
+    }
+    
+}
 
         // num2=numArray[1]; 
         console.log(num1);
@@ -243,3 +292,18 @@ function operator(e){
 // [num1,function,num2]
 
 // array.reduce(callback(num1,num2))
+
+
+//enter number
+    //if array is empty -> num1 (array[0])
+//enter operation 
+    //saves num1 as array element 0
+    //stores callback based on sign as array element 1
+        //if array isn't empty, stores as array element 2, then assigns to num2
+//either hit enter
+    //performs calculation, updates display, removes elements from array other than result which will be used as num1 in next calculation
+//or hit operation to continue with calculation
+    //push to array (array1)
+    //updates display with current total
+        //enter num which will be stored as num2/array[2]
+    
