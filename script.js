@@ -4,6 +4,7 @@ var num1;
 var num2;
 var num1string='';
 var num2string='';
+var numstring='';
 var callback;
 var display=document.getElementById('calculation');
 var opDisplay=document.getElementById('operations');
@@ -21,8 +22,7 @@ function operate(number1,callback,number2){
     // numArray.pop();
     // numArray.pop();
     // numArray.pop();
-    num1string=String(numArray[0]);
-    num2string='';
+    numstring=String(numArray[0]);
 }
 
 function add(x,y){
@@ -50,18 +50,27 @@ numButtons.forEach((numButton) => {
 
 function numInput(e){
     if(numArray[0]===undefined){
-        num1string+=this.textContent;
-        display.textContent=num1string;
-        console.log(`num1string: ${num1string}`);
+        numstring+=this.textContent;
+        display.textContent=numstring;
+        num1=numstring;
+        console.log(`num1string: ${numstring}`);
     }
     else{
-        num2string+=this.textContent;
-        display.textContent=num2string;
+        numstring+=this.textContent;
+        display.textContent=numstring;
+        num2=numstring;
         // num2=numArray[1];
         num1=numArray[0];
-        console.log(`num2string: ${num2string}`);
+        console.log(`num2string: ${numstring}`);
     }
 }
+
+const delButton=document.querySelector('.delete');
+delButton.addEventListener('click', (e)=> {
+    numstring=numstring.slice(0,-1)
+    display.textContent=numstring;
+});
+   
 
 //when the operator button is clicked, it changes the opDisplay to reflect the operation being performed. It also assigns the corresponding function as the callback to be called
 //it also assigns numArray[0] the num1string input as a number
@@ -76,34 +85,38 @@ opButtons.forEach((opButton) => {
         // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
     if(!numArray[0]){
         if(this.textContent==="+"){
-            numArray.push(Number(num1string));
+            numArray.push(Number(num1));
             opDisplay.textContent="+";
             callback=add;
             numArray.push(callback);
+            numstring='';
             // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="-"){
-            numArray.push(Number(num1string));
+            numArray.push(Number(num1));
             opDisplay.textContent="-";
             callback=subtract;
             numArray.push(callback);
+            numstring='';
             // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="×"){
-            numArray.push(Number(num1string));
+            numArray.push(Number(num1));
             opDisplay.textContent="×";
             callback=multiply;
             numArray.push(callback);
+            numstring='';
             // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
         else if (this.textContent==="÷"){
             opDisplay.textContent="÷";
-            numArray.push(Number(num1string));
+            numArray.push(Number(num1));
             callback=divide;
             numArray.push(callback);
+            numstring='';
             // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }   
@@ -113,6 +126,7 @@ opButtons.forEach((opButton) => {
             opDisplay.textContent="+";
             callback=add;
             numArray.push(callback);
+            numstring='';
             // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
@@ -120,6 +134,7 @@ opButtons.forEach((opButton) => {
             opDisplay.textContent="-";
             callback=subtract;
             numArray.push(callback);
+            numstring='';
             // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
@@ -127,6 +142,7 @@ opButtons.forEach((opButton) => {
             opDisplay.textContent="×";
             callback=multiply;
             numArray.push(callback);
+            numstring='';
             // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
@@ -134,6 +150,7 @@ opButtons.forEach((opButton) => {
             opDisplay.textContent="÷";
             callback=divide;
             numArray.push(callback);
+            numstring='';
             // // num2=Number(num2string);
             // display.textContent=callback(num1,num2);
         }
@@ -192,7 +209,7 @@ opButtons.forEach((opButton) => {
 //when ENTER is clicked, numArray[1] is assigned num2string as a number, and num2 is assigned the 2nd element in the array
 //operate function is called with num1 and num2 are parameters and the operator function
     if(this.textContent==="ENTER"){
-        numArray.push(Number(num2string));
+        numArray.push(Number(num2));
         num2=numArray[2];
         opDisplay.textContent="=";
         operate(numArray[0],numArray[1],numArray[2]);
@@ -204,8 +221,7 @@ opButtons.forEach((opButton) => {
         numArray=[];
         callback='';
         console.log(numArray);
-        num2string='';
-        num1string='';
+        numstring='';
     }
 }   
 
