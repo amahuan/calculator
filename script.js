@@ -24,6 +24,7 @@ function operate(number1,callback,number2){
     // numArray.pop();
     numstring=String(numArray[0]);
     num2=0;
+    decButton.disabled=false;
 }
 
 function add(x,y){
@@ -48,13 +49,14 @@ const numButtons=document.querySelectorAll('.number');
 numButtons.forEach((numButton) => {
     numButton.addEventListener('click', numInput)
 });
-
+var isClicked=false;
 function numInput(e){
     if(numArray[0]===undefined){
         numstring+=this.textContent;
         display.textContent=numstring;
         num1=numstring;
         console.log(`num1string: ${numstring}`);
+        console.log(e.target);
     }
     else{
         numstring+=this.textContent;
@@ -64,12 +66,22 @@ function numInput(e){
         num1=numArray[0];
         console.log(`num2string: ${numstring}`);
     }
-}
+  if(this==="."){
+      console.log('hello');
+      isClicked=true;
+    }
+  }  
+
 
 const delButton=document.querySelector('.delete');
 delButton.addEventListener('click', (e)=> {
     numstring=numstring.slice(0,-1)
     display.textContent=numstring;
+});
+
+const decButton=document.querySelector('.decimal');
+decButton.addEventListener('click', (e)=> {
+    decButton.disabled=true;
 });
    
 
@@ -91,6 +103,7 @@ opButtons.forEach((opButton) => {
             callback=add;
             numArray.push(callback);
             numstring='';
+            decButton.disabled=false;
         }
         else if(this.textContent==="-"){
             numArray.push(Number(num1));
@@ -98,6 +111,7 @@ opButtons.forEach((opButton) => {
             callback=subtract;
             numArray.push(callback);
             numstring='';
+            decButton.disabled=false;
         }
         else if(this.textContent==="×"){
             numArray.push(Number(num1));
@@ -105,6 +119,7 @@ opButtons.forEach((opButton) => {
             callback=multiply;
             numArray.push(callback);
             numstring='';
+            decButton.disabled=false;
         }
         else if (this.textContent==="÷"){
             opDisplay.textContent="÷";
@@ -112,6 +127,7 @@ opButtons.forEach((opButton) => {
             callback=divide;
             numArray.push(callback);
             numstring='';
+            decButton.disabled=false;
         }   
     }
     else if(numArray[0]){
@@ -124,6 +140,7 @@ opButtons.forEach((opButton) => {
             display.textContent=numArray[0];
             numstring='';
             numArray.splice(1,numArray.length-2);
+            decButton.disabled=false;
         }
         else if(this.textContent==="-"){
             numArray.push(Number(num2));
@@ -134,6 +151,7 @@ opButtons.forEach((opButton) => {
             display.textContent=numArray[0];
             numstring='';
             numArray.splice(1,numArray.length-2);
+            decButton.disabled=false;
         }
         else if(this.textContent==="×"){
             numArray.push(Number(num2));
@@ -144,6 +162,7 @@ opButtons.forEach((opButton) => {
             display.textContent=numArray[0];
             numstring='';
             numArray.splice(1,numArray.length-2);
+            decButton.disabled=false;
         }
         else if (this.textContent==="÷"){
             numArray.push(Number(num2));
@@ -154,6 +173,7 @@ opButtons.forEach((opButton) => {
             display.textContent=numArray[0];
             numstring='';
             numArray.splice(1,numArray.length-2);
+            decButton.disabled=false;
         }
     }  
 
@@ -175,6 +195,7 @@ opButtons.forEach((opButton) => {
         callback='';
         console.log(numArray);
         numstring='';
+        decButton.disabled=false;
     }
 }   
 
