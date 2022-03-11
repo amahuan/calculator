@@ -15,8 +15,12 @@ var opDisplay=document.getElementById('operations');
 //num2string is cleared for the next number input
 function operate(number1,callback,number2){
     displayValue=callback(number1,number2);
+    numArray.push(displayValue);
     display.textContent=displayValue;
-    numArray[0]=displayValue;
+    numArray=numArray.pop();
+    // numArray.pop();
+    // numArray.pop();
+    // numArray.pop();
     num1string=String(numArray[0]);
     num2string='';
 }
@@ -70,34 +74,49 @@ opButtons.forEach((opButton) => {
  function selectOp(e) {
         // console.log(button.textContent);
         // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
-        numArray[0]=Number(num1string);
         if(this.textContent==="+"){
+            numArray.push(Number(num1string));
             opDisplay.textContent="+";
             callback=add;
+            numArray.push(callback);
+            // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="-"){
+            numArray.push(Number(num1string));
             opDisplay.textContent="-";
             callback=subtract;
+            numArray.push(callback);
+            // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="×"){
+            numArray.push(Number(num1string));
             opDisplay.textContent="×";
             callback=multiply;
+            numArray.push(callback);
+            // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
         }
         else if (this.textContent==="÷"){
             opDisplay.textContent="÷";
+            numArray.push(Number(num1string));
             callback=divide;
-        }     
-        
+            numArray.push(callback);
+            // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
+        }   
+
         // num2=numArray[1]; 
         console.log(num1);
         console.log(num2);
 //when ENTER is clicked, numArray[1] is assigned num2string as a number, and num2 is assigned the 2nd element in the array
 //operate function is called with num1 and num2 are parameters and the operator function
     if(this.textContent==="ENTER"){
-        numArray[1]=Number(num2string);
-        num2=numArray[1];
+        numArray.push(Number(num2string));
+        num2=numArray[2];
         opDisplay.textContent="=";
-        operate(num1,callback,num2);
+        operate(numArray[0],numArray[1],numArray[2]);
     }
 //when the CLEAR button is clicked, all variables are cleared and displays are cleared as well.
     if(this.textContent==="CLEAR"){
