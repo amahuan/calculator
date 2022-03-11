@@ -108,53 +108,83 @@ opButtons.forEach((opButton) => {
             // display.textContent=callback(num1,num2);
         }   
     }
-    else {
+    else if(numArray[0]){
         if(this.textContent==="+"){
-            numArray.push(Number(num2string));
             opDisplay.textContent="+";
             callback=add;
             numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
+            // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="-"){
-            numArray.push(Number(num2string));
             opDisplay.textContent="-";
             callback=subtract;
             numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
+            // // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="×"){
-            numArray.push(Number(num2string));
             opDisplay.textContent="×";
             callback=multiply;
             numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
+            // // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
         }
         else if (this.textContent==="÷"){
-            numArray.push(Number(num2string));
             opDisplay.textContent="÷";
             callback=divide;
             numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
-    }
+            // // num2=Number(num2string);
+            // display.textContent=callback(num1,num2);
+        }
+    }  
+    // else {
+    //     if(this.textContent==="+"){
+    //         // numArray.push(Number(num2string));//this isnt working because it pushes each new number, not replace
+    //         opDisplay.textContent="+";
+    //         callback=add;
+    //         numArray.push(callback);
+    //         num2=Number(num2string);
+    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+    //         display.textContent=numArray[0];
+    //         num1string='';
+    //         num2string='';
+    //     }
+    //     else if(this.textContent==="-"){
+    //         numArray.push(Number(num2string));
+    //         opDisplay.textContent="-";
+    //         callback=subtract;
+    //         numArray.push(callback);
+    //         num2=Number(num2string);
+    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+    //         display.textContent=numArray[0];
+    //         num1string='';
+    //         num2string='';
+    //     }
+    //     else if(this.textContent==="×"){
+    //         numArray.push(Number(num2string));
+    //         opDisplay.textContent="×";
+    //         callback=multiply;
+    //         numArray.push(callback);
+    //         num2=Number(num2string);
+    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+    //         display.textContent=numArray[0];
+    //         num1string='';
+    //         num2string='';
+    //     }
+    //     else if (this.textContent==="÷"){
+    //         numArray.push(Number(num2string));
+    //         opDisplay.textContent="÷";
+    //         callback=divide;
+    //         numArray.push(callback);
+    //         num2=Number(num2string);
+    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+    //         display.textContent=numArray[0];
+    //         num1string='';
+    //         num2string='';
+    // }
     
-}
+// }
 
         // num2=numArray[1]; 
         console.log(num1);
