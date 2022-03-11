@@ -91,8 +91,6 @@ opButtons.forEach((opButton) => {
             callback=add;
             numArray.push(callback);
             numstring='';
-            // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="-"){
             numArray.push(Number(num1));
@@ -100,8 +98,6 @@ opButtons.forEach((opButton) => {
             callback=subtract;
             numArray.push(callback);
             numstring='';
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="×"){
             numArray.push(Number(num1));
@@ -109,8 +105,6 @@ opButtons.forEach((opButton) => {
             callback=multiply;
             numArray.push(callback);
             numstring='';
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
         }
         else if (this.textContent==="÷"){
             opDisplay.textContent="÷";
@@ -118,8 +112,6 @@ opButtons.forEach((opButton) => {
             callback=divide;
             numArray.push(callback);
             numstring='';
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
         }   
     }
     else if(numArray[0]){
@@ -132,83 +124,39 @@ opButtons.forEach((opButton) => {
             display.textContent=numArray[0];
             numstring='';
             numArray.splice(1,numArray.length-2);
-            // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
         }
         else if(this.textContent==="-"){
+            numArray.push(Number(num2));
             opDisplay.textContent="-";
             callback=subtract;
             numArray.push(callback);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
             numstring='';
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
+            numArray.splice(1,numArray.length-2);
         }
         else if(this.textContent==="×"){
+            numArray.push(Number(num2));
             opDisplay.textContent="×";
             callback=multiply;
             numArray.push(callback);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
             numstring='';
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
+            numArray.splice(1,numArray.length-2);
         }
         else if (this.textContent==="÷"){
+            numArray.push(Number(num2));
             opDisplay.textContent="÷";
             callback=divide;
             numArray.push(callback);
+            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
+            display.textContent=numArray[0];
             numstring='';
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
+            numArray.splice(1,numArray.length-2);
         }
     }  
-    // else {
-    //     if(this.textContent==="+"){
-    //         // numArray.push(Number(num2string));//this isnt working because it pushes each new number, not replace
-    //         opDisplay.textContent="+";
-    //         callback=add;
-    //         numArray.push(callback);
-    //         num2=Number(num2string);
-    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-    //         display.textContent=numArray[0];
-    //         num1string='';
-    //         num2string='';
-    //     }
-    //     else if(this.textContent==="-"){
-    //         numArray.push(Number(num2string));
-    //         opDisplay.textContent="-";
-    //         callback=subtract;
-    //         numArray.push(callback);
-    //         num2=Number(num2string);
-    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-    //         display.textContent=numArray[0];
-    //         num1string='';
-    //         num2string='';
-    //     }
-    //     else if(this.textContent==="×"){
-    //         numArray.push(Number(num2string));
-    //         opDisplay.textContent="×";
-    //         callback=multiply;
-    //         numArray.push(callback);
-    //         num2=Number(num2string);
-    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-    //         display.textContent=numArray[0];
-    //         num1string='';
-    //         num2string='';
-    //     }
-    //     else if (this.textContent==="÷"){
-    //         numArray.push(Number(num2string));
-    //         opDisplay.textContent="÷";
-    //         callback=divide;
-    //         numArray.push(callback);
-    //         num2=Number(num2string);
-    //         numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-    //         display.textContent=numArray[0];
-    //         num1string='';
-    //         num2string='';
-    // }
-    
-// }
 
-        // num2=numArray[1]; 
         console.log(num1);
         console.log(num2);
 //when ENTER is clicked, numArray[1] is assigned num2string as a number, and num2 is assigned the 2nd element in the array
