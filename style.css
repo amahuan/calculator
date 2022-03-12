@@ -94,22 +94,22 @@ button {
 }
 
 button:hover,
-#Clear:hover,
-#Enter:hover {
+#clear:hover,
+#enter:hover {
     background-color: rgb(169, 238, 255);
 }
 
-#Clear, #Enter {
+#clear, #enter {
     display: flex;
     flex: 1 1 auto;
     justify-content: center;
     align-items: center;
     width: 50%;
 }
-#Clear {
+#clear {
     background-color: pink;
 }
-#Enter {
+#enter {
     background-color: rgb(155, 240, 218)
 }
 

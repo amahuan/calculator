@@ -1,183 +1,240 @@
 var displayValue;
-var numArray=[];
-var num1;
-var num2;
+var firstOperand;
+var secondOperand;
+var currentResult;
 var num1string='';
 var num2string='';
 var callback;
-var display=document.getElementById('calculation');
-var opDisplay=document.getElementById('operations');
+var opFunc;
 
 
-//when ENTER is clicked, operation is performed on the number inputs
-//the value displayed is the result, which also becomes stored as the 1st element in the array, becoming num1
-//num1string is set to be equal to the 1st element, as a string
-//num2string is cleared for the next number input
-function operate(number1,callback,number2){
-    displayValue=callback(number1,number2);
-    numArray.push(displayValue);
-    display.textContent=displayValue;
-    numArray=[numArray.pop()];
-    // numArray.pop();
-    // numArray.pop();
-    // numArray.pop();
-    num1string=String(numArray[0]);
-    num2string='';
-}
-
-function add(x,y){
-    return x+y;
-}
-    
-function subtract(num1,num2){
-    return num1-num2;
-}
-
-function multiply(num1,num2) {
-    return num1*num2;
-}
-
-function divide(num1,num2){
-    return Number((num1/num2).toFixed(7));
-}
-//when a number button is clicked, it creates a string of numbers and is displayed on the screen
-//if the number entered is the first number (indicated by array[0]===undefined, it will be stored as num1. 
-//Otherwise, if there already is a num1 from a prior calculation, the new number is stored as num2. num1 is assigned the value stored in the first element of the array
+const display=document.getElementById('calculation');
+const opDisplay=document.querySelector('#operations');
 const numButtons=document.querySelectorAll('.number');
+const delButton=document.querySelector('.delete');
+const decButton=document.querySelector('.decimal');
+const opButtons=document.querySelectorAll('.operator');
+const equalsButton=document.getElementById('enter');
+const clearButton=document.getElementById('clear');
+
 numButtons.forEach((numButton) => {
-    numButton.addEventListener('click', numInput)
+    numButton.addEventListener('click', numInput);
 });
 
-function numInput(e){
-    if(numArray[0]===undefined){
-        num1string+=this.textContent;
-        display.textContent=num1string;
-        console.log(`num1string: ${num1string}`);
-    }
-    else{
-        num2string+=this.textContent;
-        display.textContent=num2string;
-        // num2=numArray[1];
-        num1=numArray[0];
-        console.log(`num2string: ${num2string}`);
-    }
-}
+delButton.addEventListener('click', (e)=> {
+    numstring=numstring.slice(0,-1);
+    display.textContent=numstring;
+});
 
-//when the operator button is clicked, it changes the opDisplay to reflect the operation being performed. It also assigns the corresponding function as the callback to be called
-//it also assigns numArray[0] the num1string input as a number
-    //if there is already a previous value for num1string from the previous calculation, numArray[0] is assigned that
-const opButtons=document.querySelectorAll('.operator');
-opButtons.forEach((opButton) => {
-    opButton.addEventListener('click', selectOp)
- });
- 
- function selectOp(e) {
-        // console.log(button.textContent);
-        // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
-    if(!numArray[0]){
-        if(this.textContent==="+"){
-            numArray.push(Number(num1string));
-            opDisplay.textContent="+";
-            callback=add;
-            numArray.push(callback);
-            // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
-        }
-        else if(this.textContent==="-"){
-            numArray.push(Number(num1string));
-            opDisplay.textContent="-";
-            callback=subtract;
-            numArray.push(callback);
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
-        }
-        else if(this.textContent==="×"){
-            numArray.push(Number(num1string));
-            opDisplay.textContent="×";
-            callback=multiply;
-            numArray.push(callback);
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
-        }
-        else if (this.textContent==="÷"){
-            opDisplay.textContent="÷";
-            numArray.push(Number(num1string));
-            callback=divide;
-            numArray.push(callback);
-            // // num2=Number(num2string);
-            // display.textContent=callback(num1,num2);
-        }   
-    }
-    else {
-        if(this.textContent==="+"){
-            numArray.push(Number(num2string));
-            opDisplay.textContent="+";
-            callback=add;
-            numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
-        }
-        else if(this.textContent==="-"){
-            numArray.push(Number(num2string));
-            opDisplay.textContent="-";
-            callback=subtract;
-            numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
-        }
-        else if(this.textContent==="×"){
-            numArray.push(Number(num2string));
-            opDisplay.textContent="×";
-            callback=multiply;
-            numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
-        }
-        else if (this.textContent==="÷"){
-            numArray.push(Number(num2string));
-            opDisplay.textContent="÷";
-            callback=divide;
-            numArray.push(callback);
-            num2=Number(num2string);
-            numArray[0]=callback(numArray[0],numArray[numArray.length-2]);
-            display.textContent=numArray[0];
-            num1string='';
-            num2string='';
-    }
+decButton.addEventListener('click', (e)=> {
     
-}
+    decButton.disabled=true;
+});
+//need to append decimal
 
-        // num2=numArray[1]; 
-        console.log(num1);
-        console.log(num2);
-//when ENTER is clicked, numArray[1] is assigned num2string as a number, and num2 is assigned the 2nd element in the array
-//operate function is called with num1 and num2 are parameters and the operator function
-    if(this.textContent==="ENTER"){
-        numArray.push(Number(num2string));
-        num2=numArray[2];
-        opDisplay.textContent="=";
-        operate(numArray[0],numArray[1],numArray[2]);
-    }
-//when the CLEAR button is clicked, all variables are cleared and displays are cleared as well.
-    if(this.textContent==="CLEAR"){
+opButtons.forEach((opButton) => {
+    opButton.addEventListener('click', () => selectOp(opButton.value));
+ });
+   
+equalsButton.addEventListener('click', evaluate);
+
+clearButton.addEventListener('click', reset);
+
+function reset(){
         opDisplay.textContent='';
         display.textContent='';
         numArray=[];
         callback='';
         console.log(numArray);
-        num2string='';
-        num1string='';
+        num1string;
+        num1;
+        num2;
+        decButton.disabled=false;
+}
+
+function evaluate(){
+    if(callback){       
+        secondOperand=num2string;    
+        opDisplay.textContent="=";
+        currentResult=operate(firstOperand,secondOperand,callback);
+        display.textContent=currentResult;
+        firstOperand=currentResult;
     }
-}   
+}
+//     displayValue=callback(number1,number2);
+//     display.textContent=displayValue.substring(0,10);
+//     numArray.unshift(displayValue);
+//     numArray=[numArray.shift()];
+//     // numArray.pop();
+//     // numArray.pop();
+//     // numArray.pop();
+//     numstring=String(numArray[0]);
+//     num2=0;
+//     decButton.disabled=false;
+// }
+
+// function operate(firstOperand,callback,secondOperand){
+//     displayValue=callback(firstOperand,secondOperand);
+//     display.textContent=displayValue;
+//     currentResult=displayValue;
+    
+//     return displayValue;
+// }
+
+//when ENTER is clicked, operation is performed on the number inputs
+//the value displayed is the result, which also becomes stored as the 1st element in the array, becoming num1
+//num1string is set to be equal to the 1st element, as a string
+//num2string is cleared for the next number input
+
+
+// function operate(a, b, callback) {
+//     a = Number(a)
+//     b = Number(b)
+
+
+//     switch (callback) {
+//       case '+':
+//         return add(a, b)
+//       case '−':
+//         return substract(a, b)
+//       case '×':
+//         return multiply(a, b)
+//       case '÷':
+//         if (b === 0) return null
+//         else return divide(a, b)
+//       default:
+//         return null
+//     }
+//   }
+
+  function operate(x, y, callback) {
+    x = Number(x)
+    y = Number(y)
+    if(callback === '+') {
+        return add(x, y);
+    } else if(callback === '−') {
+        return subtract(x,y);
+    } else if(callback === '×') {
+        return multiply(x,y);
+    } else if(callback === '÷') {
+        if(y === 0) {
+            return 'lmao';
+        } else {
+        return divide(x,y);
+        }
+    }
+}
+
+
+// function operate(operator, a, b) {
+//     a = Number(a)
+//     b = Number(b)
+//     switch (operator) {
+//       case '+':
+//         return add(a, b)
+//       case '−':
+//         return substract(a, b)
+//       case '×':
+//         return multiply(a, b)
+//       case '÷':
+//         if (b === 0) return null
+//         else return divide(a, b)
+//       default:
+//         return null
+//     }
+// }
+
+function add(a, b) {
+    return a + b
+  }
+  
+  function subtract(a, b) {
+    return a - b
+  }
+  
+  function multiply(a, b) {
+    return a * b
+  }
+  
+  function divide(a, b) {
+    return a / b
+  }
+
+
+
+//when a number button is clicked, it creates a string of numbers and is displayed on the screen
+//if the number entered is the first number (indicated by array[0]===undefined, it will be stored as num1. 
+//Otherwise, if there already is a num1 from a prior calculation, the new number is stored as num2. num1 is assigned the value stored in the first element of the array
+
+var isClicked=false;
+function numInput(e){
+    if(firstOperand===undefined||firstOperand===0||firstOperand==="0"){
+        num1string+=this.value;
+        display.textContent=num1string;
+        // firstOperand=num1string;
+        console.log(`num1string: ${num1string}`);
+    }
+    else{
+        num2string+=this.value;
+        display.textContent=num2string;
+        // num2=numArray[1];
+        console.log(`num2string: ${num2string}`);
+    }
+  if(this==="."){
+      console.log('hello');
+      isClicked=true;
+    }
+  }  
+
+
+
+
+//when the operator button is clicked, it changes the opDisplay to reflect the operation being performed. It also assigns the corresponding function as the callback to be called
+//it also assigns numArray[0] the num1string input as a number
+    //if there is already a previous value for num1string from the previous calculation, numArray[0] is assigned that
+
+ 
+ function selectOp(perfOp) {
+        // console.log(button.textContent);
+        // if((e.key!=="+")||(e.key!=="-")||(e.key!=="*")||(e.key!=="/")||(e.key!==".")||(e.key!=="Backspace")||(e.key!=="Enter")){
+    if(callback===undefined||callback===null){
+            // firstOperand=numstring;
+            firstOperand=num1string;
+            // currentResult=firstOperand
+            opDisplay.textContent=perfOp;
+            callback=perfOp;
+            num1string='';
+            decButton.disabled=false;
+    }
+    else {
+            secondOperand=Number(num2string);
+            opDisplay.textContent=perfOp;
+            callback=perfOp;
+            display.textContent=currentResult;
+            num2string='';
+            decButton.disabled=false;
+            console.log(`num1string: ${num1string}`);
+            console.log(`firstOperand=${firstOperand}`);
+            console.log(`currentResult=${currentResult}`);
+            console.log(`secondOperand=${secondOperand}`);
+        }
+    
+      
+
+        console.log(firstOperand);
+        console.log(secondOperand);
+//when ENTER is clicked, numArray[1] is assigned num2string as a number, and num2 is assigned the 2nd element in the array
+//operate function is called with num1 and num2 are parameters and the operator function
+    if(this.textContent==="ENTER"){
+        // numArray.push(Number(secondOperand));
+        // num2=numArray[2];
+        opDisplay.textContent="=";
+        operate(firstOperand,callback,secondOperand);
+    }
+//when the CLEAR button is clicked, all variables are cleared and displays are cleared as well.
+
+}
+
 
 // const enterButton=document.querySelector('#Enter');
 //     enterButton.addEventListener('click', function (e) {
@@ -217,13 +274,13 @@ opButtons.forEach((opButton) => {
 
 // })
 
-document.addEventListener('keydown', function (e) {
-    if((e.key==="0")||(e.key==="1")||(e.key==="2")||(e.key==="3")||(e.key==="4")||(e.key==="5")||(e.key==="6")||(e.key==="7")||(e.key==="8")||(e.key==="9")||(e.key==="+")||(e.key==="-")||(e.key==="*")||(e.key==="/")||(e.key===".")||(e.key==="Backspace")||(e.key==="Enter")){
-        console.log(e);
-        num1=e.key;
-        highlight(e);
-    }
-});
+// document.addEventListener('keydown', function (e) {
+//     if((e.key==="0")||(e.key==="1")||(e.key==="2")||(e.key==="3")||(e.key==="4")||(e.key==="5")||(e.key==="6")||(e.key==="7")||(e.key==="8")||(e.key==="9")||(e.key==="+")||(e.key==="-")||(e.key==="*")||(e.key==="/")||(e.key===".")||(e.key==="Backspace")||(e.key==="Enter")){
+//         console.log(e);
+//         num1=e.key;
+//         highlight(e);
+//     }
+// });
 
 function highlight(e){
     var el = document.getElementById(`${e.key}`);
@@ -274,20 +331,20 @@ function highlight(e){
 //     }
 // }
 
-function operator(e){
-        if(e.key==="+"){
-            callback=add;
-        }
-        else if(e.key==="-"){
-            operate(num1,subtract,num2);
-        }
-        else if(e.key==="*"){
-            callback=multiply;
-        }
-        else if (e.key==="/"){
-            callback=divide;
-        }      
-    }
+// function operator(e){
+//         if(e.key==="+"){
+//             callback=add;
+//         }
+//         else if(e.key==="-"){
+//             operate(num1,subtract,num2);
+//         }
+//         else if(e.key==="*"){
+//             callback=multiply;
+//         }
+//         else if (e.key==="/"){
+//             callback=divide;
+//         }      
+//     }
 
 // [num1,function,num2]
 

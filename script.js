@@ -40,7 +40,7 @@ function multiply(num1,num2) {
 }
 
 function divide(num1,num2){
-    return Number((num1/num2).toFixed(7));
+    return Number((num1/num2).toFixed(15));
 }
 //when a number button is clicked, it creates a string of numbers and is displayed on the screen
 //if the number entered is the first number (indicated by array[0]===undefined, it will be stored as num1. 
@@ -182,6 +182,7 @@ opButtons.forEach((opButton) => {
 //when ENTER is clicked, numArray[1] is assigned num2string as a number, and num2 is assigned the 2nd element in the array
 //operate function is called with num1 and num2 are parameters and the operator function
     if(this.textContent==="ENTER"){
+        console.log('hi');
         numArray.push(Number(num2));
         num2=numArray[2];
         opDisplay.textContent="=";
