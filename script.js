@@ -122,7 +122,7 @@ function add(a, b) {
 //resets all values wen CLEAR is clicked
  function reset(){
     opDisplay.textContent='';
-    display.textContent='';
+    display.textContent='0';
     callback=null;
     firstOperand=null;
     secondOperand=null;
