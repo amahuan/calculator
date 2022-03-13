@@ -64,39 +64,38 @@ function selectOp(perfOp) {
 //secondOperand and callback.  The value on display with show the resulting value.  Callback is assigned the value of null
 //which means the result is saved as the firstOperand and the next input will following this same code
 function evaluate(e){
-    secondOperand=display.textContent;    
-    if(this.textContent==="ENTER"){
-        opDisplay.textContent="=";
-    }
+    if (callback===null || shouldResetDisplay) {return};
     if (callback==='÷'&&display.textContent==='0') {
         display.textContent="invalid operation";
         return;
     }
-    else{
-        opDisplay.textContent=callback;
-    };
+    secondOperand=display.textContent;    
     display.textContent=roundResult(operate(firstOperand,secondOperand,callback));
     callback=null;
+    shouldResetDisplay=true;
+    opDisplay.textContent=callback;
+    if(e==="Enter"|this.textContent==="ENTER"){
+        opDisplay.textContent="=";
+    }
+    else{
+        opDisplay.textContent=callback;
+    }
+    
 }
 //determines the callback function to be performed on the inputs
-  function operate(x, y, callback) {
+function operate(x, y, callback) {
     x = Number(x)
     y = Number(y)
     if(callback === '+') {
         return add(x, y);
-    } else if(callback === '−') {
+    } else if(callback === '-') {
         return subtract(x,y);
     } else if(callback === '×') {
         return multiply(x,y);
     } else if(callback === '÷') {
-        if(y === 0) {
-            return 'lmao';
-        } else {
         return divide(x,y);
-        }
     }
 }
-
 function add(a, b) {
     return a + b
   }
@@ -119,7 +118,7 @@ function add(a, b) {
 }
 //resets the display when needed (After first operand has been inputted)
  function resetDisplay(){
-    opDisplay.textContent='';
+    // opDisplay.textContent='';
     display.textContent='';
     shouldResetDisplay=false;
  } 
@@ -147,7 +146,7 @@ function highlight(e){
     const el = document.querySelector(`button[data-key="${e.keyCode}"]`);
     const original = el.style.backgroundColor;
     if(!el) return;
-    el.style.backgroundColor='rgb(169, 238, 255)';
+    el.style.backgroundColor='rgb(255, 169, 222)';
     setTimeout(function() { el.style.backgroundColor = original; }, 100);
 }
 
@@ -157,21 +156,22 @@ document.addEventListener('keydown', function (e) {
 
 //assigns click functions to keydown events
 function clickToKey(e) {
-console.log(e);
-    if((e.keyCode==="+")||(e.key==="-")||(e.key==="*")||(e.key==="/")){
+    if(e.keyCode==="+"||e.key==="-"||e.key==="="||e.key==="/"){
         selectOp(convertOperator(e.key));
     }
-    if(e.key==="Enter"){evaluate();
+    if(e.key==="Enter") {
+        evaluate(e.key);
     }
-    if(e.key>=0&&e.key<=9){numInput(e.key);
-    }
-    if(e.key==='.'){addDecimal();}
-    if(e.key==="Backspace"){deleteNum();}
+    if(e.keyCode>=48&&e.keyCode<=57) {
+        numInput(e.key);}
+    if(e.key==='.') addDecimal();
+    if(e.key==="Backspace") deleteNum();
+    if (e.key==='Delete') resetDisplay()
 }
 
 function convertOperator(keyboardOperator) {
-    if (keyboardOperator==='/') return '÷'
-    if (keyboardOperator==='*') return '×'
-    if (keyboardOperator==='-') return '−'
-    if (keyboardOperator==='+') return '+'
-  }
+    if (keyboardOperator==='/') return '÷';
+    if (keyboardOperator==='*') return '×';
+    if (keyboardOperator==='-') return '-';
+    if (keyboardOperator==='=') return '+';
+}

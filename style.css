@@ -19,7 +19,7 @@ body {
     padding: 16px;
     border-radius: 8px;
     border-width: 1px;
-    background-color: rgb(212, 212, 212);
+    background-color: rgb(111, 207, 236);
     width: 300px;
 }
 
@@ -90,13 +90,14 @@ button {
     border-color: black;
     border-width: 1px;
     font-size: 16px;
+    box-shadow: 0;
     background-color: rgb(255, 251, 251);
 }
 
 button:hover,
 #clear:hover,
 #enter:hover {
-    background-color: rgb(169, 238, 255);
+    background-color: rgb(255, 169, 222);
 }
 
 #clear, #enter {
