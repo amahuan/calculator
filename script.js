@@ -49,11 +49,14 @@ function numInput(number){
 // is also re-enabled.
 function selectOp(perfOp) {
     if(callback!==null){
-        evaluate();
+         evaluate();
     }
     firstOperand=display.textContent;
-    opDisplay.textContent=perfOp;
+    opDisplay.textContent=`${firstOperand} ${perfOp}`;
     callback=perfOp;
+    if(display.textContent==="0"){
+        resetOpDisplay();
+    }
     decButton.disabled=false;
     shouldResetDisplay=true;
 }
@@ -71,15 +74,15 @@ function evaluate(e){
     }
     secondOperand=display.textContent;    
     display.textContent=roundResult(operate(firstOperand,secondOperand,callback));
-    callback=null;
     shouldResetDisplay=true;
-    opDisplay.textContent=callback;
+    // opDisplay.textContent=callback;
     if(e==="Enter"|this.textContent==="ENTER"){
-        opDisplay.textContent="=";
+        opDisplay.textContent=`${firstOperand} ${callback} ${secondOperand} =`;
     }
     else{
         opDisplay.textContent=callback;
     }
+    callback=null;
     
 }
 //determines the callback function to be performed on the inputs
@@ -122,6 +125,11 @@ function add(a, b) {
     display.textContent='';
     shouldResetDisplay=false;
  } 
+
+ function resetOpDisplay(){
+    opDisplay.textContent='';
+ }
+
 //adds decimal point to value on display
  function addDecimal() {
     display.textContent+='.';
@@ -144,8 +152,8 @@ function roundResult(number) {
 //allows for highlighting of the numbers and operators that are being keyed
 function highlight(e){
     const el = document.querySelector(`button[data-key="${e.keyCode}"]`);
+    if(!el){return;}
     const original = el.style.backgroundColor;
-    if(!el) return;
     el.style.backgroundColor='rgb(255, 169, 222)';
     setTimeout(function() { el.style.backgroundColor = original; }, 100);
 }
@@ -156,7 +164,7 @@ document.addEventListener('keydown', function (e) {
 
 //assigns click functions to keydown events
 function clickToKey(e) {
-    if(e.keyCode==="+"||e.key==="-"||e.key==="="||e.key==="/"){
+    if(e.key==="+"||e.key==="-"||e.key==="+"||e.key==="/"){
         selectOp(convertOperator(e.key));
     }
     if(e.key==="Enter") {
@@ -173,5 +181,5 @@ function convertOperator(keyboardOperator) {
     if (keyboardOperator==='/') return '÷';
     if (keyboardOperator==='*') return '×';
     if (keyboardOperator==='-') return '-';
-    if (keyboardOperator==='=') return '+';
+    if (keyboardOperator==='+') return '+';
 }
